@@ -1,32 +1,32 @@
 package main
 
 import (
-	"crypto/sha256"
-	"io"
-	"log"
-	"os"
 	"bytes"
-	"time"
-	"syscall"
+	"crypto/sha256"
+	"fmt"
 	"github.com/kardianos/osext"
+	"io"
+	"os"
+	"syscall"
+	"time"
 )
 
 func main() {
 	binpath, err := osext.Executable()
 	if err != nil {
-		log.Fatal(err)
+		die(err)
 	}
 
 	lasthash, err := hashfile(binpath)
 	if err != nil {
-		log.Fatal(err)
+		die(err)
 	}
 
 	// Wait until the hash changes
 	for {
 		hash, err := hashfile(binpath)
 		if err != nil {
-			log.Fatal(err)
+			die(err)
 		}
 		// log.Printf("hash of %v: %v", binpath, base64.StdEncoding.EncodeToString(hash))
 
@@ -42,7 +42,7 @@ func main() {
 	for {
 		hash, err := hashfile(binpath)
 		if err != nil {
-			log.Fatal(err)
+			die(err)
 		}
 
 		if bytes.Equal(hash, lasthash) {
@@ -56,10 +56,11 @@ func main() {
 	// Exec the new binary
 	err = syscall.Exec(binpath, os.Args, nil)
 	if err != nil {
-		log.Fatal(err)
+		die(err)
 	}
 }
 
+// Get the sha256 hash of the file contents at path.
 func hashfile(path string) ([]byte, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -72,4 +73,9 @@ func hashfile(path string) ([]byte, error) {
 		return nil, err
 	}
 	return h.Sum(nil), nil
+}
+
+func die(err error) {
+	fmt.Fprintf(os.Stderr, "justasec failed: %v\n", err)
+	os.Exit(1)
 }
