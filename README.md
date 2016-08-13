@@ -9,6 +9,8 @@ go get github.com/mlsteele/justasec
 go install github.com/mlsteele/justasec
 ```
 
+Or, [download](https://github.com/mlsteele/justasec/releases/download/v1.0/justasec) the binary.
+
 ## Usage
 
 Have you ever accidentally ran an old build result while a new one was compiling? Add this one line to the beginning of your build script and say goodbye to that mistake!
