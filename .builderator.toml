@@ -1,0 +1,5 @@
+# All relative paths are relative to this config file.
+WatchDir    = "."
+BuildCmd    = "go install"
+StatusFile  = "/tmp/buildstatus-justasec"
+
