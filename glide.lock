@@ -1,0 +1,6 @@
+hash: 1691fd8b7f2a12812e11cc7771f1f1c582f0650cdc23e9b97c0fa50b7d820d96
+updated: 2018-11-15T09:45:46.988021274-05:00
+imports:
+- name: github.com/kardianos/osext
+  version: ae77be60afb1dcacde03767a8c37337fad28ac14
+testImports: []
